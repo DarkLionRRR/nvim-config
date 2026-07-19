@@ -31,7 +31,7 @@ local function _get_plugins(filename, filetype)
     for i, item in ipairs(plugin) do
         result[i] = {
             url = item.url or URL_PREFIX .. item[1],
-            module = string.gsub(item[1], "%w+/", ""),
+            module = item.name or item[1]:match("/(.+)$"):gsub("%.nvim$", ""),
             opts = item.opts,
             config = item.config,
             map = item.map,
@@ -47,11 +47,15 @@ local function _enable_plugin(plugin)
         return
     end
 
-    if type(plugin.opts) == "table" then
-        local module = require(plugin.module)
-        if type(module.setup) == "function" then
-            module.setup(plugin.opts)
-        end
+    local ok, module = pcall(require, plugin.module)
+    if ok == false then
+        return
+    end
+
+    if type(module.setup) == "function" and type(plugin.opts) == "table" then
+        module.setup(plugin.opts)
+    elseif type(module.setup) == "function" then
+        module.setup()
     end
 end
 
