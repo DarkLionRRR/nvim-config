@@ -1,0 +1,7 @@
+local M = {}
+
+function M.load()
+    -- todo
+end
+
+return M
