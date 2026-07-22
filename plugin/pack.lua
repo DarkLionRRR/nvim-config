@@ -1,10 +1,8 @@
-local M = {}
-
 local PLUGIN_ROOT = vim.fs.normalize(vim.fn.stdpath("config") .. "/lua/plugin")
 local PLUGIN_PREFIX = "plugin."
 local URL_PREFIX = "https://github.com/"
 
-local function _get_plugins(filename, filetype)
+local function scan_plugins(filename, filetype)
     if filetype ~= "file" or vim.fs.ext(filename) ~= "lua" then
         return {}
     end
@@ -41,7 +39,7 @@ local function _get_plugins(filename, filetype)
     return result
 end
 
-local function _enable_plugin(plugin)
+local function enable_plugin(plugin)
     if type(plugin.config) == "function" then
         plugin.config()
         return
@@ -59,32 +57,24 @@ local function _enable_plugin(plugin)
     end
 end
 
-function M.load()
-    if package.loaded["module.plugin"] ~= nil then
-        return
-    end
+local plugins = {}
+for filename, filetype in vim.fs.dir(PLUGIN_ROOT, {}) do
+    table.insert(plugins, scan_plugins(filename, filetype))
+end
+plugins = vim.fn.flatten(plugins, 1)
 
-    local plugins = {}
-    for filename, filetype in vim.fs.dir(PLUGIN_ROOT, {}) do
-        table.insert(plugins, _get_plugins(filename, filetype))
-    end
-    plugins = vim.fn.flatten(plugins, 1)
+vim.pack.add(vim.tbl_map(function(plugin)
+    return plugin.url
+end, plugins))
 
-    vim.pack.add(vim.tbl_map(function(plugin)
-        return plugin.url
-    end, plugins))
-
-    for _, plugin in ipairs(plugins) do
-        _enable_plugin(plugin)
-    end
-
-    local disable_plugins = vim.iter(vim.pack.get())
-        :filter(function(x) return not x.active end)
-        :map(function(x) return x.spec.name end)
-        :totable()
-    if not vim.tbl_isempty(disable_plugins) then
-        vim.pack.del(disable_plugins)
-    end
+for _, plugin in ipairs(plugins) do
+    enable_plugin(plugin)
 end
 
-return M
+local disable_plugins = vim.iter(vim.pack.get())
+    :filter(function(x) return not x.active end)
+    :map(function(x) return x.spec.name end)
+    :totable()
+if not vim.tbl_isempty(disable_plugins) then
+    vim.pack.del(disable_plugins)
+end
