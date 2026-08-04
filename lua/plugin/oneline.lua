@@ -9,4 +9,5 @@ return {
     { "nvim-tree/nvim-web-devicons" },
     { "nvim-lualine/lualine.nvim" },
     { "lewis6991/gitsigns.nvim" },
+    { "j-hui/fidget.nvim" },
 }

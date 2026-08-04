@@ -55,17 +55,18 @@ local function enable_plugin(plugin)
     end
 end
 
-local plugins = {}
+local scanned_plugins = {}
 for filename, filetype in vim.fs.dir(PLUGIN_ROOT, {}) do
-    table.insert(plugins, scan_plugins(filename, filetype))
+    for _, plugin in ipairs(scan_plugins(filename, filetype)) do
+        table.insert(scanned_plugins, plugin)
+    end
 end
-plugins = vim.fn.flatten(plugins, 1)
 
 vim.pack.add(vim.tbl_map(function(plugin)
     return { src = plugin.url, version = plugin.version }
-end, plugins))
+end, scanned_plugins))
 
-for _, plugin in ipairs(plugins) do
+for _, plugin in ipairs(scanned_plugins) do
     enable_plugin(plugin)
 end
 
