@@ -4,13 +4,13 @@ vim.lsp.config("*", {
         textDocument = {
             semanticTokens = {
                 multilineTokenSupport = true,
-            }
-        }
+            },
+        },
     },
 })
 
 vim.diagnostic.config({
-    virtual_text  = true,
+    virtual_text = true,
     severity_sort = true,
 })
 
@@ -18,8 +18,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("my.lsp", {}),
     callback = function(ev)
         local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
-        local buf    = ev.buf
-        local map    = function(mode, lhs, rhs) vim.keymap.set(mode, lhs, rhs, { buffer = buf }) end
+        local buf = ev.buf
+        local map = function(mode, lhs, rhs)
+            vim.keymap.set(mode, lhs, rhs, { buffer = buf })
+        end
 
         map("n", "K", vim.lsp.buf.hover)
         map("n", "gI", vim.lsp.buf.implementation)
@@ -31,7 +33,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
         map("n", "<leader>ca", vim.lsp.buf.code_action)
         map("n", "<leader>cd", vim.diagnostic.open_float)
         map("n", "<leader>cr", vim.lsp.buf.rename)
-        map({ "n", "x" }, "<leader>cf", function() vim.lsp.buf.format({ async = true }) end)
+        map({ "n", "x" }, "<leader>cf", function()
+            vim.lsp.buf.format({ async = true })
+        end)
 
         if client:supports_method("textDocument/documentHighlight") then
             local highlight_augroup = vim.api.nvim_create_augroup("my.lsp.highlight", { clear = false })
