@@ -1,6 +1,4 @@
 -- vim.pack.add({
---   -- Quickstart configs for LSP
---   'https://github.com/neovim/nvim-lspconfig',
 --   -- Fuzzy picker
 --   'https://github.com/ibhagwan/fzf-lua',
 --   -- Autocompletion
