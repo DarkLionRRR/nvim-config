@@ -14,6 +14,7 @@ return {
             end
         end
 
+        ---@diagnostic disable-next-line: param-type-mismatch
         client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
             runtime = {
                 version = "LuaJIT",
@@ -24,11 +25,7 @@ return {
             },
             workspace = {
                 checkThirdParty = false,
-                library = {
-                    vim.env.VIMRUNTIME,
-                    -- For LSP Settings Type Annotations: https://github.com/neovim/nvim-lspconfig#lsp-settings-type-annotations
-                    vim.api.nvim_get_runtime_file("lua/lspconfig", false)[1],
-                },
+                library = { vim.env.VIMRUNTIME },
             },
         })
     end,
