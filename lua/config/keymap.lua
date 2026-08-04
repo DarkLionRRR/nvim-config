@@ -13,7 +13,7 @@ map("n", "<C-l>", "<C-w>l")
 map("i", "(", "()<Left>")
 map("i", "[", "[]<Left>")
 map("i", "{", "{}<Left>")
-map("i", "\"", "\"\"<Left>")
+map("i", '"', '""<Left>')
 map("i", "'", "''<Left>")
 
 map("n", "<S-h>", vim.cmd.bprev)

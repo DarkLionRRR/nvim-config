@@ -13,10 +13,7 @@ local function scan_plugins(filename, filetype)
         return {}
     end
 
-    if
-        (type(plugin) ~= "table")
-        or (type(plugin[1]) ~= "table" and type(plugin[1]) ~= "string")
-    then
+    if (type(plugin) ~= "table") or (type(plugin[1]) ~= "table" and type(plugin[1]) ~= "string") then
         vim.notify("Invalid plugin data in " .. filename, vim.log.levels.ERROR)
         return {}
     end
@@ -72,8 +69,12 @@ for _, plugin in ipairs(plugins) do
 end
 
 local disable_plugins = vim.iter(vim.pack.get())
-    :filter(function(x) return not x.active end)
-    :map(function(x) return x.spec.name end)
+    :filter(function(x)
+        return not x.active
+    end)
+    :map(function(x)
+        return x.spec.name
+    end)
     :totable()
 if not vim.tbl_isempty(disable_plugins) then
     vim.pack.del(disable_plugins)
