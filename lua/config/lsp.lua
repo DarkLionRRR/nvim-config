@@ -1,12 +1,13 @@
-vim.lsp.config("*", {
-    root_markers = { ".git" },
-    capabilities = {
-        textDocument = {
-            semanticTokens = {
-                multilineTokenSupport = true,
-            },
+local caps = require("blink.cmp").get_lsp_capabilities({
+    textDocument = {
+        semanticTokens = {
+            multilineTokenSupport = true,
         },
     },
+})
+vim.lsp.config("*", {
+    root_markers = { ".git" },
+    capabilities = caps,
 })
 
 vim.diagnostic.config({

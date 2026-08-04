@@ -30,6 +30,7 @@ local function scan_plugins(filename, filetype)
             opts = item.opts,
             config = item.config,
             map = item.map,
+            version = item.version,
         }
     end
 
@@ -61,7 +62,7 @@ end
 plugins = vim.fn.flatten(plugins, 1)
 
 vim.pack.add(vim.tbl_map(function(plugin)
-    return plugin.url
+    return { src = plugin.url, version = plugin.version }
 end, plugins))
 
 for _, plugin in ipairs(plugins) do
