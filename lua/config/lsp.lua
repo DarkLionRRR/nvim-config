@@ -5,6 +5,7 @@ local caps = require("blink.cmp").get_lsp_capabilities({
         },
     },
 })
+
 vim.lsp.config("*", {
     root_markers = { ".git" },
     capabilities = caps,
@@ -54,6 +55,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
-for _, cfg in ipairs(vim.lsp.get_configs()) do
-    vim.lsp.enable(cfg.name)
+local lsp_list = {
+    "lua_ls",
+    "stylua",
+    "phpantom_lsp",
+    "bashls",
+}
+
+for _, cfg in ipairs(lsp_list) do
+    vim.lsp.enable(cfg)
 end

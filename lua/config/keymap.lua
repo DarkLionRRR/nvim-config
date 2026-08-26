@@ -22,3 +22,8 @@ map("n", "<leader>bd", vim.cmd.bdelete)
 
 map("x", ">", ">gv")
 map("x", "<", "<gv")
+
+map("n", "<C-Up>", "<cmd>resize +2<cr>")
+map("n", "<C-Down>", "<cmd>resize -2<cr>")
+map("n", "<C-Left>", "<cmd>vertical resize -2<cr>")
+map("n", "<C-Right>", "<cmd>vertical resize +2<cr>")
