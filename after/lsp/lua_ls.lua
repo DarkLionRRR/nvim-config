@@ -1,8 +1,4 @@
----@type vim.lsp.Config
 return {
-    cmd = { "lua-language-server" },
-    filetypes = { "lua" },
-    root_markers = { { ".stylua.toml", "stylua.toml" } },
     on_init = function(client)
         if client.workspace_folders then
             local path = client.workspace_folders[1].name
@@ -29,7 +25,4 @@ return {
             },
         })
     end,
-    settings = {
-        Lua = {},
-    },
 }

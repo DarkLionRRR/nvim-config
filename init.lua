@@ -7,7 +7,12 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 
-require("config.pack")
+require("plugin.oneline")
+require("plugin.blink")
+require("plugin.gitsigns")
+require("plugin.quicker")
+require("plugin.treesitter")
+require("plugin.fzf")
 require("config.lsp")
 require("config.option")
 require("config.keymap")
