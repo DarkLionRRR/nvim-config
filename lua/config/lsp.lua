@@ -55,11 +55,27 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
+vim.filetype.add({
+    filename = {
+        ["docker-compose.yml"] = "yaml.docker-compose",
+        ["docker-compose.yaml"] = "yaml.docker-compose",
+        ["compose.yml"] = "yaml.docker-compose",
+        ["compose.yaml"] = "yaml.docker-compose",
+    },
+})
+
 local lsp_list = {
     "lua_ls",
     "stylua",
     "phpantom_lsp",
     "bashls",
+    "gopls",
+    "sqls",
+    "docker_language_server",
+    "yamlls",
+    "basedpyright",
+    "ruff",
+    "rust_analyzer",
 }
 
 for _, cfg in ipairs(lsp_list) do

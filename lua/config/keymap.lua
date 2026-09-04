@@ -10,12 +10,6 @@ map("n", "<C-j>", "<C-w>j")
 map("n", "<C-k>", "<C-w>k")
 map("n", "<C-l>", "<C-w>l")
 
-map("i", "(", "()<Left>")
-map("i", "[", "[]<Left>")
-map("i", "{", "{}<Left>")
-map("i", '"', '""<Left>')
-map("i", "'", "''<Left>")
-
 map("n", "<S-h>", vim.cmd.bprev)
 map("n", "<S-l>", vim.cmd.bnext)
 map("n", "<leader>bd", vim.cmd.bdelete)
