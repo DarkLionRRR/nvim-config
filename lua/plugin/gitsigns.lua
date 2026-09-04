@@ -13,10 +13,10 @@ require("gitsigns").setup({
         end
 
         -- Navigation
-        map("n", "hn", function()
+        map("n", "<leader>hn", function()
             gitsigns.nav_hunk("next")
         end)
-        map("n", "hp", function()
+        map("n", "<leader>hp", function()
             gitsigns.nav_hunk("prev")
         end)
 

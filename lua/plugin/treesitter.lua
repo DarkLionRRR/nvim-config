@@ -1,12 +1,12 @@
 vim.pack.add({
     { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter-context" },
 })
 
 local treesitter = require("nvim-treesitter")
 
 treesitter.setup({
-    -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
     install_dir = vim.fn.stdpath("data") .. "/site",
 })
 
@@ -25,6 +25,11 @@ treesitter.install({
     "markdown_inline",
     "nginx",
     "dockerfile",
+    "go",
+    "gomod",
+    "gosum",
+    "python",
+    "rust",
 })
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -40,6 +45,11 @@ vim.api.nvim_create_autocmd("FileType", {
         "markdown",
         "nginx",
         "dockerfile",
+        "go",
+        "gomod",
+        "gosum",
+        "python",
+        "rust",
     },
     callback = function(args)
         vim.treesitter.start(args.buf)
@@ -72,19 +82,19 @@ local keys = {
     },
     goto_next_start = {
         { "n", "x", "o" },
-        { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
+        { ["]f"] = "@function.outer", ["]a"] = "@parameter.inner" },
     },
     goto_next_end = {
         { "n", "x", "o" },
-        { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
+        { ["]F"] = "@function.outer", ["]A"] = "@parameter.inner" },
     },
     goto_previous_start = {
         { "n", "x", "o" },
-        { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
+        { ["[f"] = "@function.outer", ["[a"] = "@parameter.inner" },
     },
     goto_previous_end = {
         { "n", "x", "o" },
-        { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
+        { ["[F"] = "@function.outer", ["[A"] = "@parameter.inner" },
     },
     swap_next = {
         { "n" },
@@ -109,3 +119,21 @@ for method, cfg in pairs(keys) do
         end, { silent = true })
     end
 end
+
+require("treesitter-context").setup({
+    enable = true,
+    multiwindow = false,
+    max_lines = 1,
+    min_window_height = 0,
+    line_numbers = true,
+    multiline_threshold = 20,
+    trim_scope = "outer",
+    mode = "cursor",
+    separator = nil,
+    zindex = 20,
+    on_attach = nil,
+})
+
+vim.keymap.set("n", "[c", function()
+    require("treesitter-context").go_to_context(vim.v.count1)
+end, { silent = true })
