@@ -30,6 +30,9 @@ treesitter.install({
     "gosum",
     "python",
     "rust",
+    "javascript",
+    "typescript",
+    "tsx",
 })
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -50,6 +53,9 @@ vim.api.nvim_create_autocmd("FileType", {
         "gosum",
         "python",
         "rust",
+        "javascript",
+        "typescript",
+        "tsx",
     },
     callback = function(args)
         vim.treesitter.start(args.buf)
