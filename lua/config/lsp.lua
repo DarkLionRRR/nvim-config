@@ -76,6 +76,7 @@ local lsp_list = {
     "basedpyright",
     "ruff",
     "rust_analyzer",
+    "ts_ls",
 }
 
 for _, cfg in ipairs(lsp_list) do
